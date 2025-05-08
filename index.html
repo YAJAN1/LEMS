@@ -2,129 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LEMS Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('Screenshot 2025-05-08 085916.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #ffffff;
-    }
-
-    .overlay {
-      background: rgba(0, 51, 102, 0.8);
-      min-height: 100vh;
-      padding: 20px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1 {
-      color: #cce6ff;
-      margin-bottom: 30px;
-      font-size: 2em;
-    }
-
-    .cards-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    h2 {
-      color: #99ccff;
-      margin-bottom: 10px;
-      font-size: 1.2em;
-    }
-
-    p {
-      font-size: 1.5em;
-      margin: 0;
-      color: #ffffff;
-    }
-
-    @media (min-width: 600px) {
-      .cards-container {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 30px;
-      }
-
-      .card {
-        flex: 1;
-        max-width: 250px;
-      }
-    }
-  </style>
+  <title>LEMS Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="overlay">
+  <div class="cursor"></div>
+
+  <div class="header">
+    <img src="Screenshot_2025-05-08_085916.png" alt="LNMIIT Logo" width="150">
     <h1>LEMS Live Environment Data</h1>
-    <div class="cards-container">
-      <div class="card">
-        <h2>Avg Temperature</h2>
-        <p id="temp">Loading...</p>
-      </div>
-      <div class="card">
-        <h2>Avg Humidity</h2>
-        <p id="humidity">Loading...</p>
-      </div>
-      <div class="card">
-        <h2>Avg AQI</h2>
-        <p id="aqi">Loading...</p>
-      </div>
+  </div>
+
+  <div class="tasks">
+    <div class="task-card">
+      <h2>Average Temperature</h2>
+      <p id="temp">Loading...</p>
+    </div>
+
+    <div class="task-card">
+      <h2>Average Humidity</h2>
+      <p id="humidity">Loading...</p>
+    </div>
+
+    <div class="task-card">
+      <h2>Average AQI</h2>
+      <p id="aqi">Loading...</p>
     </div>
   </div>
 
-  <script>
-    const token = "YoAucXpwL-zcctPdsg9c2GO4ANoZywyv";
-
-    async function fetchData() {
-      try {
-        const [t1, t2, h1, h2, g1, g2] = await Promise.all([
-          fetch(`https://blynk.cloud/external/api/get?token=${token}&V0`).then(r => r.text()),
-          fetch(`https://blynk.cloud/external/api/get?token=${token}&V3`).then(r => r.text()),
-          fetch(`https://blynk.cloud/external/api/get?token=${token}&V1`).then(r => r.text()),
-          fetch(`https://blynk.cloud/external/api/get?token=${token}&V4`).then(r => r.text()),
-          fetch(`https://blynk.cloud/external/api/get?token=${token}&V2`).then(r => r.text()),
-          fetch(`https://blynk.cloud/external/api/get?token=${token}&V5`).then(r => r.text())
-        ]);
-
-        const avgTemp = ((parseFloat(t1) + parseFloat(t2)) / 2).toFixed(2);
-        const avgHum = ((parseFloat(h1) + parseFloat(h2)) / 2).toFixed(2);
-        const avgAqi = Math.round((parseInt(g1) + parseInt(g2)) / 2);
-
-        document.getElementById("temp").innerText = avgTemp + " °C";
-        document.getElementById("humidity").innerText = avgHum + " %";
-        document.getElementById("aqi").innerText = avgAqi;
-      } catch (err) {
-        console.error("Error fetching data from Blynk:", err);
-        document.getElementById("temp").innerText = "Error";
-        document.getElementById("humidity").innerText = "Error";
-        document.getElementById("aqi").innerText = "Error";
-      }
-    }
-
-    setInterval(fetchData, 5000);
-    fetchData();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
