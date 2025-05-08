@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.header {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tasks {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.task-card {
+  background: linear-gradient(to right, #4a00e0, #8e2de2);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1.5vw;
+  height: 1.5vw;
+  background: #7f5af0;
+  border: 2px solid white;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: 150ms ease-in;
+  z-index: 9999;
+}
+
+@media (max-width: 500px) {
+  .tasks {
+    flex-direction: column;
+    align-items: center;
+  }
+}
