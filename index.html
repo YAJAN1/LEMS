@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>LEMS Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
@@ -13,16 +14,27 @@
     }
 
     .overlay {
-      background: rgba(0, 51, 102, 0.8); /* Dark blue overlay */
+      background: rgba(0, 51, 102, 0.8);
       min-height: 100vh;
-      padding: 50px 20px;
+      padding: 20px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h1 {
       color: #cce6ff;
-      margin-bottom: 40px;
-      font-size: 2.5em;
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 400px;
     }
 
     .card {
@@ -30,19 +42,13 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       padding: 20px;
-      margin: 20px auto;
-      width: 300px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.03);
     }
 
     h2 {
       color: #99ccff;
       margin-bottom: 10px;
+      font-size: 1.2em;
     }
 
     p {
@@ -50,30 +56,43 @@
       margin: 0;
       color: #ffffff;
     }
+
+    @media (min-width: 600px) {
+      .cards-container {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
+
+      .card {
+        flex: 1;
+        max-width: 250px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="overlay">
-    <h1>LEMS Live Environment Data (Averages)</h1>
-
-    <div class="card">
-      <h2>Average Temperature</h2>
-      <p id="temp">Loading...</p>
-    </div>
-
-    <div class="card">
-      <h2>Average Humidity</h2>
-      <p id="humidity">Loading...</p>
-    </div>
-
-    <div class="card">
-      <h2>Average AQI</h2>
-      <p id="aqi">Loading...</p>
+    <h1>LEMS Live Environment Data</h1>
+    <div class="cards-container">
+      <div class="card">
+        <h2>Avg Temperature</h2>
+        <p id="temp">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Avg Humidity</h2>
+        <p id="humidity">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Avg AQI</h2>
+        <p id="aqi">Loading...</p>
+      </div>
     </div>
   </div>
 
   <script>
-    const token = "YoAucXpwL-zcctPdsg9c2GO4ANoZywyv";  // Your Blynk Auth Token
+    const token = "YoAucXpwL-zcctPdsg9c2GO4ANoZywyv";
 
     async function fetchData() {
       try {
@@ -93,7 +112,6 @@
         document.getElementById("temp").innerText = avgTemp + " °C";
         document.getElementById("humidity").innerText = avgHum + " %";
         document.getElementById("aqi").innerText = avgAqi;
-
       } catch (err) {
         console.error("Error fetching data from Blynk:", err);
         document.getElementById("temp").innerText = "Error";
@@ -102,10 +120,11 @@
       }
     }
 
-    setInterval(fetchData, 5000); // Refresh every 5 seconds
-    fetchData(); // Initial fetch
+    setInterval(fetchData, 5000);
+    fetchData();
   </script>
 </body>
 </html>
+
 
 
