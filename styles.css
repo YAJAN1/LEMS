@@ -41,12 +41,65 @@ body {
   border-radius: 12px;
   color: white;
   font-weight: 500;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
 }
 
 .task-card:hover {
   transform: translateY(-5px);
+}
+
+.team {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.team h2 {
+  font-size: clamp(0.8rem, 5vw, 3rem);
+  margin-bottom: 2rem;
+  color: #1e1e1e;
+}
+
+.team-inline {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.member-card {
+  background: white;
+  padding: 1.2rem 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  min-width: 180px;
+}
+
+.member-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.member-card h3 {
+  font-size: 1.2rem;
+  color: #4a00e0;
+  margin-bottom: 0.3rem;
+}
+
+.member-card p {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+@media (max-width: 500px) {
+  .tasks,
+  .team-inline {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .cursor {
@@ -62,11 +115,4 @@ body {
   transform: translate(-50%, -50%);
   transition: 150ms ease-in;
   z-index: 9999;
-}
-
-@media (max-width: 500px) {
-  .tasks {
-    flex-direction: column;
-    align-items: center;
-  }
 }
