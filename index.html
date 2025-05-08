@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LEMS Dashboard</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 10px auto;
+      width: 300px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>LEMS Live Environment Data (Averages)</h1>
+
+  <div class="card">
+    <h2>Average Temperature</h2>
+    <p id="temp">Loading...</p>
+  </div>
+
+  <div class="card">
+    <h2>Average Humidity</h2>
+    <p id="humidity">Loading...</p>
+  </div>
+
+  <div class="card">
+    <h2>Average AQI</h2>
+    <p id="aqi">Loading...</p>
+  </div>
+
+  <script>
+    const token = "YoAucXpwL-zcctPdsg9c2GO4ANoZywyv";  // Your Blynk Auth Token
+
+    async function fetchData() {
+      try {
+        const [t1, t2, h1, h2, g1, g2] = await Promise.all([
+          fetch(https://blynk.cloud/external/api/get?token=${token}&V0).then(r => r.text()),
+          fetch(https://blynk.cloud/external/api/get?token=${token}&V3).then(r => r.text()),
+          fetch(https://blynk.cloud/external/api/get?token=${token}&V1).then(r => r.text()),
+          fetch(https://blynk.cloud/external/api/get?token=${token}&V4).then(r => r.text()),
+          fetch(https://blynk.cloud/external/api/get?token=${token}&V2).then(r => r.text()),
+          fetch(https://blynk.cloud/external/api/get?token=${token}&V5).then(r => r.text())
+        ]);
+
+        const avgTemp = ((parseFloat(t1) + parseFloat(t2)) / 2).toFixed(2);
+        const avgHum = ((parseFloat(h1) + parseFloat(h2)) / 2).toFixed(2);
+        const avgAqi = Math.round((parseInt(g1) + parseInt(g2)) / 2);
+
+        document.getElementById("temp").innerText = avgTemp + " °C";
+        document.getElementById("humidity").innerText = avgHum + " %";
+        document.getElementById("aqi").innerText = avgAqi;
+
+      } catch (err) {
+        console.error("Error fetching data from Blynk:", err);
+        document.getElementById("temp").innerText = "Error";
+        document.getElementById("humidity").innerText = "Error";
+        document.getElementById("aqi").innerText = "Error";
+      }
+    }
+
+    setInterval(fetchData, 5000); // Refresh every 5 seconds
+    fetchData(); // Initial fetch
+  </script>
+
+</body>
+</html>
